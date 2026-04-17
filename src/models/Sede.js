@@ -1,4 +1,4 @@
-class Sede{
+class Sede {
     constructor(id, nombre, direccion) {
         this.id = id;
         this.nombre = nombre;

@@ -4,19 +4,27 @@ import Practica from './Practica.js';
 import Sede from './Sede.js';
 import DisponibilidadHoraria from './DisponibilidadHoraria.js';
 
-class Medico{
-    constructor(id,usuario,matricula,nombre){
+class Medico {
+    constructor(id,usuario,matricula,nombre,especialidades,practicas,sedes,disponibilidades) {
         this.id = id;
         this.usuario = usuario;
         this.matricula = matricula;
         this.nombre = nombre;
-        this.especialidades = [];
-        this.practicas = [];
-        this.sedes = [];
-        this.disponibilidades = [];
+        this.especialidades = [...especialidades];
+        this.practicas = [...practicas];
+        this.sedes = [...sedes];
+        this.disponibilidades = [...disponibilidades];
     }
 
-    definirDisponibilidad(nuevaDisponibilidad){
-        this.disponibilidades = nuevaDisponibilidad;
+    definirDisponibilidad(nuevaDisponibilidad) {
+        const existe = this.disponibilidades.some(d =>
+            d.id === nuevaDisponibilidad.id             
+        );
+        
+        if(!existe){
+            this.disponibilidades.push(nuevaDisponibilidad);
+        } else {
+            console.log("Esta disponibilidad ya esta definida.");       
+        }
     }
 }

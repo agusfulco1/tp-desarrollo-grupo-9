@@ -6,7 +6,7 @@ import Practica from './Practica.js'
 import CambioEstadoTurno from './CambioEstadoTurno.js';
 
 class Turno {
-    constructor(id, medico, paciente, fechaHora, sede, practica, estado, costo){
+    constructor(id, medico, paciente, fechaHora, sede, practica, estado, historialEstados, costo){
         this.id = id;
         this.medico = medico;
         this.paciente = paciente;
@@ -14,7 +14,7 @@ class Turno {
         this.sede = sede;
         this.practica = practica;
         this.estado = estado;
-        this.historialEstados = [];
+        this.historialEstados = [...historialEstados];
         this.costo = costo;
     }
 

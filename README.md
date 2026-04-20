@@ -4,8 +4,12 @@
 
 Para la realización de este proyecto, decidimos implementar el flujo de trabajo **GitHub Flow**, el cual consiste en lo siguiente:
 
+### main
+
 El proyecto se encuentra en una **rama principal** `main` que se mantiene siempre estable y lista para producción.
-  
+
+### Ramas temporales
+
 Cada modificación del proyecto se realiza en una **rama temporal**, por lo cual `main` se mantiene estable durante el desarrollo de cambios. 
 
   Dentro del **IDE** (**Entorno de Desarrollo Integrado**), para crear una rama utilizamos el siguiente comando de Git en la terminal:
@@ -31,8 +35,9 @@ Entonces pusheamos la rama en el repositorio:
 ```
   git push origin cambio
 ```
- 
-  Luego de hacer push, se abre un **Pull Request** (**PR**) en GitHub, el cual permite que se realicen las revisiones y pruebas necesarias por parte del equipo de desarrollo antes de agregar las modificaciones al `main`. En caso de que ocurra un fallo, se corrige en la misma rama.
+### Pull Request
+
+Luego de hacer push, se abre un **Pull Request** (**PR**) en GitHub, el cual permite que se realicen las revisiones y pruebas necesarias por parte del equipo de desarrollo antes de agregar las modificaciones al `main`. En caso de que ocurra un fallo, se corrige en la misma rama.
 
 Una vez aprobada la modificación por el equipo, el Pull Request se **mergea** en `main` desde GitHub, implementando los cambios en la rama principal.
 

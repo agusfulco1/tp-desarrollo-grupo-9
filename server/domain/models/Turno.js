@@ -5,7 +5,7 @@ import Sede from './Sede.js'
 import Practica from './Practica.js'
 import CambioEstadoTurno from './CambioEstadoTurno.js';
 
-class Turno {
+export class Turno {
     constructor(id, medico, paciente, fechaHora, sede, practica, estado, historialEstados, costo){
         this.id = id;
         this.medico = medico;

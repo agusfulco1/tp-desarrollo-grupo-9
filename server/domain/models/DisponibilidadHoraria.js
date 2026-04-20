@@ -1,6 +1,6 @@
 import {DiaSemana} from "../enums/DiaSemana.js" 
 
-class DisponibilidadHoraria {
+export class DisponibilidadHoraria {
     constructor(id,diaSemana, horaDesde, horaHasta) {
         this.id = id;
         this.diaSemana = diaSemana;

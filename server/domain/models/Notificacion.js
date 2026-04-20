@@ -1,6 +1,6 @@
 import {Usuario} from "./Usuario.js"
 
-class Notificacion {
+export class Notificacion {
     constructor(id, destinario, remitente, mensaje, fechaHorarioCreacion, fechaHoraLeida, leida) {
         this.id = id;
         this.destinario = destinario;

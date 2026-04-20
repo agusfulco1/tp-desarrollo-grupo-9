@@ -1,6 +1,6 @@
 import {Plan} from "./Plan.js"
 
-class ObraSocial {
+export class ObraSocial {
     constructor(id, nombre, planes) {
         this.id = id;
         this.nombre = nombre;

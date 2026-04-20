@@ -4,7 +4,7 @@ import Practica from './Practica.js';
 import Sede from './Sede.js';
 import DisponibilidadHoraria from './DisponibilidadHoraria.js';
 
-class Medico {
+export class Medico {
     constructor(id,usuario,matricula,nombre,especialidades,practicas,sedes,disponibilidades) {
         this.id = id;
         this.usuario = usuario;

@@ -1,4 +1,4 @@
-class Especialidad {
+export class Especialidad {
     constructor(id, nombre, duracionTurnoEnMins, costoConsulta) {
         this.id = id;
         this.nombre = nombre;

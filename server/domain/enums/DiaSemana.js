@@ -1,4 +1,4 @@
-const DiaSemana = Object.freeze({
+export const DiaSemana = Object.freeze({
     LUNES: 'LUNES',
     MARTES: 'MARTES',
     MIERCOLES: 'MIERCOLES',
@@ -7,5 +7,3 @@ const DiaSemana = Object.freeze({
     SABADO: 'SABADO',
     DOMINGO: 'DOMINGO'
 });
-
-module.exports = DiaSemana;

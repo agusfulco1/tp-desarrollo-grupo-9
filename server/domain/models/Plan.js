@@ -4,7 +4,7 @@ import NivelCobertura from './NivelCobertura.js';
 import Especialidad from './Especialidad.js';
 import Practica from './Practica.js';
 
-class Plan {
+export class Plan {
     constructor(id, nombre, coberturaEspecialidad, coberturasPracticas) {
         this.id = id;
         this.nombre = nombre;

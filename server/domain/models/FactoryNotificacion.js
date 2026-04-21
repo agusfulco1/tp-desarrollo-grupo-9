@@ -44,10 +44,41 @@ export class FactoryNotification {
                 null
             )
 
-        return notificacion;
+        return [notificacion];
     }
 
     crearDiaPrevioTurno(turno){
-        // FALTA RECORDATORIO EL DIA PREVIO AL TURNO A MEDICO Y PACIENTE
+        const fechaActual = new Date();
+        const fecha = turno.fechaHora();
+
+        if(fechaActual.getDay === fecha.getDay() - 1 && fechaActual.getMonth() === fecha.getMonth() && fechaActual.getYear() === fecha.getYear()){
+            const notificaciones = [];
+            
+            const recordatorioMedico = new Notificacion(
+                null,
+                turno.medico,
+                null,
+                'Recordatorio de turno',
+                fechaActual,
+                null,
+                false
+            );
+
+            const recordatorioUsuario = new Notificacion(
+                null,
+                turno.paciente,
+                null,
+                'Recordatorio de turno',
+                fechaActual,
+                null,
+                false
+            );
+
+        }
+
+        notificaciones.push(recordatorioMedico,recordatorioUsuario);
+
+        return notificaciones;
+
     }
 }

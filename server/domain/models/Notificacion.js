@@ -13,5 +13,6 @@ export class Notificacion {
 
     marcarComoLeida() {
         this.leida = true;
+        this.fechaHoraLeida = new Date();
     }
 }

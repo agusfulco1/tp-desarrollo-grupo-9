@@ -1,6 +1,6 @@
-import {Usuario} from "./Usuario.js"
+import Usuario from "./Usuario.js"
 
-export class Notificacion {
+export default class Notificacion {
     constructor(id, destinario, remitente, mensaje, fechaHorarioCreacion, fechaHoraLeida, leida) {
         this.id = id;
         this.destinario = destinario;
@@ -13,5 +13,6 @@ export class Notificacion {
 
     marcarComoLeida() {
         this.leida = true;
+        this.fechaHoraLeida = new Date();
     }
 }

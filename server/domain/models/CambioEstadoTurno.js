@@ -1,7 +1,7 @@
 import {EstadoTurno} from "../enums/EstadoTurno.js"
-import {Turno} from "../enums/Turno.js" 
+import Turno from "./Turno.js" 
 
-export class CambioEstadoTurno {
+export default class CambioEstadoTurno {
     constructor(fechaHoraIngreso, estado, turno, usuario, motivo) {
         this.fechaHoraIngreso = fechaHoraIngreso;
         this.estado = estado;

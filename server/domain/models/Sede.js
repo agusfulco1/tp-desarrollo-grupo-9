@@ -1,4 +1,4 @@
-export class Sede {
+export default class Sede {
     constructor(id, nombre, direccion) {
         this.id = id;
         this.nombre = nombre;

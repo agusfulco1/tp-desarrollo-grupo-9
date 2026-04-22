@@ -4,6 +4,6 @@ export default class Practica {
         this.codigo = codigo;
         this.nombre = nombre;
         this.duracionTurnoEnMins = duracionTurnoEnMins;
-        this.costo = costo;
+        this.costoConsulta = costo;
     }
 }

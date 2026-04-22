@@ -17,8 +17,8 @@ export default class Medico {
     }
 
     definirDisponibilidad(nuevaDisponibilidad) {
-        const existe = this.disponibilidades.some(d =>
-            d == nuevaDisponibilidad             
+        const existe = this.disponibilidades.some(disponibilidad =>
+            disponibilidad == nuevaDisponibilidad             
         );
         
         if(!existe){

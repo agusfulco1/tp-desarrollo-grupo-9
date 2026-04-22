@@ -12,13 +12,14 @@ import Notificacion from './domain/models/Notificacion.js';
 import {EstadoTurno} from "./domain/enums/EstadoTurno.js"
 import {DiaSemana} from "./domain/enums/DiaSemana.js"
 import FactoryNotification from './domain/models/FactoryNotificacion.js';
+import Agenda from './domain/models/Agenda.js';
 
 const user = new Usuario('id', 'username', 'password')
-const especialidad = new Especialidad('id', 'nombre', 10, 10000)
-const practica = new Practica('id', '123', 'nombre', 10, 10000)
+const especialidad = new Especialidad('id', 'nombre', 30, 10000)
+const practica = new Practica('id', '123', 'nombre', 30, 10000)
 const sede = new Sede('123', 'nombre', 'direccion')
-const disponibilidadHoraria = new DisponibilidadHoraria(DiaSemana.LUNES, 'horaInicio', 'horaFin')
-const otraDisponibilidadHoraria = new DisponibilidadHoraria(DiaSemana.MIERCOLES, 'horaInicio2', 'horaFin2')
+const disponibilidadHoraria = new DisponibilidadHoraria(DiaSemana.LUNES, "11:00", "15:00")
+const otraDisponibilidadHoraria = new DisponibilidadHoraria(DiaSemana.MIERCOLES, "11:00", "15:00")
 const medico = new Medico(1, user, '123', 'name', [especialidad], [practica], [sede], [disponibilidadHoraria])
 
 const fechaHora = new Date()
@@ -49,3 +50,10 @@ console.log(notificacionmanana)
 
 notificacion.marcarComoLeida()
 console.log(notificacion)
+
+const agenda = new Agenda()
+const turnosEspecialidad = agenda.generarTurnosPara(especialidad, medico, sede)
+console.log(turnosEspecialidad)
+
+const turnosPractica = agenda.generarTurnosPara(practica,medico,sede)
+console.log(turnosPractica)

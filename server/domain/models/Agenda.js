@@ -16,27 +16,7 @@ export default class Agenda {
             return;
         }
 
-        const turnos = [];
-        medico.disponibilidades.forEach( disponibilidad => {
-            // const date = new Date();
-            // const year = date.getFullYear(); 
-            // const month = date.getMonth();
-            // const fechaHora = new Date(year, month, (-1*(disponibilidad.horaDesde - disponibilidad.horaHasta)));
-            // forEach(disponibilidad.horaHasta >= (disponibilidad.horaHesde + especialidad.duracionturnoenmins*cantidad_de_turnos) =>)
-            const turno = new Turno(
-                null, //id
-                medico,
-                null,
-                null, // TODO método para generar fecha y hora a partir de la disponibilidad horaria
-                sede,
-                null,
-                EstadoTurno.DISPONIBLE,
-                [],
-                especialidad.costoConsulta
-            )
-            turnos.push(turno);
-        })
-        return turnos;
+        return this.armarTurnos(especialidad, medico, sede);
     }
 
     generarTurnosPara(practica, medico, sede) { // El parámetro sede no aparece en el diagrama
@@ -49,26 +29,50 @@ export default class Agenda {
             return;
         }
 
-        const turnos = [];
-        medico.disponibilidades.forEach(disponibilidad => {
-            const turno = new Turno(
-                null, //id
-                medico,
-                null,
-                null, // TODO método para generar fecha y hora a partir de la disponibilidad horaria
-                sede,
-                practica,
-                EstadoTurno.DISPONIBLE,
-                [],
-                practica.costo
-            )
-            turnos.push(turno);
-        })
-        return turnos;
+        return this.armarTurnos(practica, medico, sede);
             
     }
 
     refrescarTurnosSegunDisponibilidadDe(medico){
         
+    }
+
+    armarTurnos(tipoTurno, medico, sede){
+        const turnos = [];
+        medico.disponibilidades.forEach( disponibilidad => {
+            const date = new Date();
+            const year = date.getFullYear(); 
+            const month = date.getMonth();
+            const day = date.getDate();
+            const [horaDesde, minDesde] = disponibilidad.horaDesde.split(":").map(Number);
+            const [horaHasta, minHasta] = disponibilidad.horaHasta.split(":").map(Number);
+            const inicioEnMin = horaDesde * 60 + minDesde
+            const finEnMin = horaHasta * 60 + minHasta
+
+            const duracion = tipoTurno.duracionTurnoEnMins
+            const cantidadTurnos = Math.floor((finEnMin - inicioEnMin) / duracion)
+
+            for (let i = 0; i < cantidadTurnos; i++) {
+                const minutosTurno = inicioEnMin + i * duracion
+
+                const hora = Math.floor(minutosTurno / 60)
+                const minutos = minutosTurno % 60
+
+                const fechaHoraTurno = new Date(year, month, day, hora-3, minutos, 0, 0)
+                const turno = new Turno(
+                    null, //id
+                    medico,
+                    null,
+                    fechaHoraTurno,
+                    sede,
+                    null,
+                    EstadoTurno.DISPONIBLE,
+                    [],
+                    tipoTurno.costoConsulta
+                )
+                turnos.push(turno);
+            }
+        })
+        return turnos;
     }
 }

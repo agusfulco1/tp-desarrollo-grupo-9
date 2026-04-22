@@ -4,7 +4,7 @@ import Practica from './Practica.js';
 import Sede from './Sede.js';
 import DisponibilidadHoraria from './DisponibilidadHoraria.js';
 
-export class Medico {
+export default class Medico {
     constructor(id,usuario,matricula,nombre,especialidades,practicas,sedes,disponibilidades) {
         this.id = id;
         this.usuario = usuario;
@@ -18,7 +18,7 @@ export class Medico {
 
     definirDisponibilidad(nuevaDisponibilidad) {
         const existe = this.disponibilidades.some(d =>
-            d.id === nuevaDisponibilidad.id             
+            d == nuevaDisponibilidad             
         );
         
         if(!existe){

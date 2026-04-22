@@ -1,11 +1,11 @@
 import { EstadoTurno } from "../enums/EstadoTurno.js"
-import {Medico} from "./Medico.js" 
-import {Especialidad} from "./Especialidad.js"
-import {Practica} from "./Practica.js" 
-import {Turno} from "./Turno.js" 
-import { DisponibilidadHoraria } from "./DisponibilidadHoraria.js"
+import Medico from "./Medico.js" 
+import Especialidad from "./Especialidad.js"
+import Practica from "./Practica.js" 
+import Turno from "./Turno.js" 
+import DisponibilidadHoraria from "./DisponibilidadHoraria.js"
 
-export class Agenda {
+export default class Agenda {
     generarTurnosPara(especialidad, medico, sede) { // El parámetro sede no aparece en el diagrama
         if (!medico.especialidades.includes(especialidad)) {
             console.log("El medico no tiene esta especialidad");
@@ -17,20 +17,25 @@ export class Agenda {
         }
 
         const turnos = [];
-        for (const disponibilidad of medico.disponibilidades) {
+        medico.disponibilidades.forEach( disponibilidad => {
+            // const date = new Date();
+            // const year = date.getFullYear(); 
+            // const month = date.getMonth();
+            // const fechaHora = new Date(year, month, (-1*(disponibilidad.horaDesde - disponibilidad.horaHasta)));
+            // forEach(disponibilidad.horaHasta >= (disponibilidad.horaHesde + especialidad.duracionturnoenmins*cantidad_de_turnos) =>)
             const turno = new Turno(
                 null, //id
                 medico,
                 null,
-                disponibilidad.fechaHora, // TODO método para generar fecha y hora a partir de la disponibilidad horaria
-                sede = sede,
+                null, // TODO método para generar fecha y hora a partir de la disponibilidad horaria
+                sede,
                 null,
                 EstadoTurno.DISPONIBLE,
-                null,
-                null
+                [],
+                especialidad.costoConsulta
             )
             turnos.push(turno);
-        }
+        })
         return turnos;
     }
 
@@ -45,21 +50,22 @@ export class Agenda {
         }
 
         const turnos = [];
-        for (const disponibilidad of medico.disponibilidades) {
+        medico.disponibilidades.forEach(disponibilidad => {
             const turno = new Turno(
                 null, //id
                 medico,
                 null,
-                disponibilidad.fechaHora, // TODO método para generar fecha y hora a partir de la disponibilidad horaria
+                null, // TODO método para generar fecha y hora a partir de la disponibilidad horaria
                 sede,
                 practica,
                 EstadoTurno.DISPONIBLE,
-                null,
+                [],
                 practica.costo
             )
             turnos.push(turno);
-        }
+        })
         return turnos;
+            
     }
 
     refrescarTurnosSegunDisponibilidadDe(medico){

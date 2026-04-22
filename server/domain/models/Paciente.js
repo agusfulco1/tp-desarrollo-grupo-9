@@ -1,8 +1,8 @@
-import Usuario from '.app.js';
+import Usuario from './Usuario.js';
 import ObraSocial from './ObraSocial.js';
 import Plan from './Plan.js';
 
-export class Paciente {
+export default class Paciente {
     constructor(id, usuario, dni, nombre, obraSocial, plan) {
         this.id = id;
         this.usuario = usuario;

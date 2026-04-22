@@ -5,7 +5,7 @@ import Sede from './Sede.js'
 import Practica from './Practica.js'
 import CambioEstadoTurno from './CambioEstadoTurno.js';
 
-export class Turno {
+export default class Turno {
     constructor(id, medico, paciente, fechaHora, sede, practica, estado, historialEstados, costo){
         this.id = id;
         this.medico = medico;
@@ -31,6 +31,6 @@ export class Turno {
         
         this.estado = nuevoEstado;
         
-        console.log("El usuario: " + quien + " actualizo el turno al estado: " + nuevoEstado + " por el motivo: " + motivo)
+        console.log("El usuario: " + quien.nombreUsuario + " actualizo el turno al estado: " + nuevoEstado + " por el motivo: " + motivo)
     }
 }

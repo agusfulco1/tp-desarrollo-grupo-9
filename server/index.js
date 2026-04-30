@@ -13,21 +13,27 @@ import {EstadoTurno} from "./domain/enums/EstadoTurno.js"
 import {DiaSemana} from "./domain/enums/DiaSemana.js"
 import FactoryNotification from './domain/models/FactoryNotificacion.js';
 import Agenda from './domain/models/Agenda.js';
+import CoberturaEspecialidad from './domain/models/CoberturaEspecialidad.js';
+import CoberturaPractica from './domain/models/CoberturaPractica.js';
 
 const user = new Usuario('id', 'username', 'password')
 const especialidad = new Especialidad('id', 'nombre', 30, 10000)
 const practica = new Practica('id', '123', 'nombre', 30, 10000)
 const sede = new Sede('123', 'nombre', 'direccion')
-const disponibilidadHoraria = new DisponibilidadHoraria(DiaSemana.LUNES, "11:00", "15:00")
-const otraDisponibilidadHoraria = new DisponibilidadHoraria(DiaSemana.MIERCOLES, "11:00", "15:00")
+const disponibilidadHoraria = new DisponibilidadHoraria(DiaSemana.LUNES, 1100, 1200)
+const otraDisponibilidadHoraria = new DisponibilidadHoraria(DiaSemana.MIERCOLES, 1100, 1200)
 const medico = new Medico(1, user, '123', 'name', [especialidad], [practica], [sede], [disponibilidadHoraria])
 
 const fechaHora = new Date()
 const manana = new Date(fechaHora)
         manana.setDate(manana.getDate() + 1)
+
+const coberturaEspecialidad = new CoberturaEspecialidad(especialidad, 80)
+const coberturaPractica = new CoberturaPractica(practica, 70)
+const plan = new Plan(1,'test',[coberturaEspecialidad],[coberturaPractica])
+
 const userPaciente = new Usuario(1,'paciente','123')
 const obraSocial = new ObraSocial(1,'OSDE', [])
-const plan = new Plan(1,'test',[],[])
 const paciente = new Paciente(1,userPaciente,12345, 'Pepe', obraSocial, plan)
 
 const turno = new Turno(1, medico, paciente, manana, sede, practica, EstadoTurno.RESERVADO, [], 8700)
@@ -37,7 +43,7 @@ console.log(turno)
 turno.actualizarEstado(EstadoTurno.RESERVADO,userPaciente,"def")
 console.log(turno)
 
-medico.definirDisponibilidad(disponibilidadHoraria) // Error
+// medico.definirDisponibilidad(disponibilidadHoraria) // Error
 medico.definirDisponibilidad(otraDisponibilidadHoraria)
 console.log(medico)
 
@@ -55,5 +61,8 @@ const agenda = new Agenda()
 const turnosEspecialidad = agenda.generarTurnosPara(especialidad, medico, sede)
 console.log(turnosEspecialidad)
 
-const turnosPractica = agenda.generarTurnosPara(practica,medico,sede)
+const turnosPractica = agenda.generarTurnosPara(practica, medico, sede)
 console.log(turnosPractica)
+console.log(plan.obtenerCobertura(especialidad))
+console.log(plan.obtenerCobertura(practica))
+

@@ -9,8 +9,8 @@ import DisponibilidadHoraria from './domain/models/DisponibilidadHoraria.js';
 import ObraSocial from './domain/models/ObraSocial.js';
 import Plan from './domain/models/Plan.js';
 import Notificacion from './domain/models/Notificacion.js';
-import {EstadoTurno} from "./domain/enums/EstadoTurno.js"
-import {DiaSemana} from "./domain/enums/DiaSemana.js"
+import {EstadoTurno} from "./domain/enums/EstadoTurno.js";
+import {DiaSemana} from "./domain/enums/DiaSemana.js";
 import FactoryNotification from './domain/models/FactoryNotificacion.js';
 import Agenda from './domain/models/Agenda.js';
 

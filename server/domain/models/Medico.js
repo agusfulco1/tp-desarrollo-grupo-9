@@ -3,6 +3,7 @@ import Especialidad from './Especialidad.js';
 import Practica from './Practica.js';
 import Sede from './Sede.js';
 import DisponibilidadHoraria from './DisponibilidadHoraria.js';
+import lodash from "lodash";
 
 export default class Medico {
     constructor(id,usuario,matricula,nombre,especialidades,practicas,sedes,disponibilidades) {
@@ -17,14 +18,17 @@ export default class Medico {
     }
 
     definirDisponibilidad(nuevaDisponibilidad) {
-        const existe = this.disponibilidades.some(disponibilidad =>
+        
+        const existe = lodash.includes(this.disponibilidades,nuevaDisponibilidad)
+
+        /*const existe = this.disponibilidades.some(disponibilidad =>
             disponibilidad == nuevaDisponibilidad             
-        );
+        );*/
         
         if(!existe){
             this.disponibilidades.push(nuevaDisponibilidad);
         } else {
-            console.log("Esta disponibilidad ya esta definida.");       
+            throw new Error("Esta disponibilidad ya esta definida.");       
         }
     }
 }

@@ -30,7 +30,5 @@ export default class Turno {
         this.historialEstados.push(cambio);
         
         this.estado = nuevoEstado;
-        
-        console.log("El usuario: " + quien.nombreUsuario + " actualizo el turno al estado: " + nuevoEstado + " por el motivo: " + motivo)
     }
 }

@@ -19,6 +19,12 @@ export default class Turno {
     }
 
     actualizarEstado(nuevoEstado, quien, motivo){
+        const estadosValidos = Object.values(EstadoTurno);
+
+        if (!estadosValidos.includes(nuevoEstado)){
+            throw new Error("Estado invalido");
+        }
+        
         const cambio = new CambioEstadoTurno(
             new Date(),
             nuevoEstado,
@@ -28,7 +34,6 @@ export default class Turno {
         );
 
         this.historialEstados.push(cambio);
-        
         this.estado = nuevoEstado;
     }
 }

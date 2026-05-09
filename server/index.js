@@ -1,68 +1,21 @@
-import Turno from './domain/models/Turno.js';
-import Medico from './domain/models/Medico.js';
-import Paciente from './domain/models/Paciente.js';
-import Usuario from './domain/models/Usuario.js';
-import Especialidad from './domain/models/Especialidad.js';
-import Practica from './domain/models/Practica.js';
-import Sede from './domain/models/Sede.js';
-import DisponibilidadHoraria from './domain/models/DisponibilidadHoraria.js';
-import ObraSocial from './domain/models/ObraSocial.js';
-import Plan from './domain/models/Plan.js';
-import Notificacion from './domain/models/Notificacion.js';
-import {EstadoTurno} from "./domain/enums/EstadoTurno.js"
-import {DiaSemana} from "./domain/enums/DiaSemana.js"
-import FactoryNotification from './domain/models/FactoryNotificacion.js';
-import Agenda from './domain/models/Agenda.js';
-import CoberturaEspecialidad from './domain/models/CoberturaEspecialidad.js';
-import CoberturaPractica from './domain/models/CoberturaPractica.js';
+import dotenv from "dotenv"
+dotenv.config()
+import server from "./app.js"
 
-const user = new Usuario('id', 'username', 'password')
-const especialidad = new Especialidad('id', 'nombre', 30, 10000)
-const practica = new Practica('id', '123', 'nombre', 30, 10000)
-const sede = new Sede('123', 'nombre', 'direccion')
-const disponibilidadHoraria = new DisponibilidadHoraria(DiaSemana.LUNES, 1100, 1200)
-const otraDisponibilidadHoraria = new DisponibilidadHoraria(DiaSemana.MIERCOLES, 1100, 1200)
-const medico = new Medico(1, user, '123', 'name', [especialidad], [practica], [sede], [disponibilidadHoraria])
+import { MongoDBClient } from "./config/database.js"
 
-const fechaHora = new Date()
-const manana = new Date(fechaHora)
-        manana.setDate(manana.getDate() + 1)
+const PORT = process.env.PORT || 3000
 
-const coberturaEspecialidad = new CoberturaEspecialidad(especialidad, 80)
-const coberturaPractica = new CoberturaPractica(practica, 70)
-const plan = new Plan(1,'test',[coberturaEspecialidad],[coberturaPractica])
+const start = async () => {
+    try {
+        // Conectar mongoDB
+        await MongoDBClient.connect()
+        // levantar servidor
+        server.port = PORT
+        server.launch()
+    } catch (error) {
+        console.error(error)
+    }
+}
 
-const userPaciente = new Usuario(1,'paciente','123')
-const obraSocial = new ObraSocial(1,'OSDE', [])
-const paciente = new Paciente(1,userPaciente,12345, 'Pepe', obraSocial, plan)
-
-const turno = new Turno(1, medico, paciente, manana, sede, practica, EstadoTurno.RESERVADO, [], 8700)
-
-turno.actualizarEstado(EstadoTurno.CANCELADO,user,"abc")
-console.log(turno)
-turno.actualizarEstado(EstadoTurno.RESERVADO,userPaciente,"def")
-console.log(turno)
-
-// medico.definirDisponibilidad(disponibilidadHoraria) // Error
-medico.definirDisponibilidad(otraDisponibilidadHoraria)
-console.log(medico)
-
-const factoryNotification = new FactoryNotification()
-const notificacion = factoryNotification.crearSegunEstado(turno)
-console.log(notificacion)
-
-const notificacionmanana = factoryNotification.crearDiaPrevioTurno(turno)
-console.log(notificacionmanana)
-
-notificacion.marcarComoLeida()
-console.log(notificacion)
-
-const agenda = new Agenda()
-const turnosEspecialidad = agenda.generarTurnosPara(especialidad, medico, sede)
-console.log(turnosEspecialidad)
-
-const turnosPractica = agenda.generarTurnosPara(practica, medico, sede)
-console.log(turnosPractica)
-console.log(plan.obtenerCobertura(especialidad))
-console.log(plan.obtenerCobertura(practica))
-
+start()

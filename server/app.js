@@ -1,17 +1,8 @@
-import express from "express";
+import express from "express"
+import { Server } from "./server.js"
 
-const app = express();
-app.use(express.json());
+const app = express()
+app.use(express.json())
+const server = new Server(app)
 
-app.get("/healthcheck", (req, res) => {
-  res.json({
-    status: "ok",
-  });
-});
-
-const puerto = 3000;
-app.listen(puerto, () => {
-  console.log("El servidor inicializo correctamente en el puerto " + puerto);
-});
-
-
+export default server

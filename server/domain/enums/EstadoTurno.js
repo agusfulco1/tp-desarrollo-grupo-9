@@ -4,26 +4,26 @@ export const EstadoTurno = Object.freeze({
     DISPONIBLE:{
         descripcion: "Disponible",
         remitente: (turno) => null,
-        destinatario: (turno) => null
+        destinario: (turno) => null
     },
     RESERVADO:{
         descripcion: "Reservado",
         remitente: (turno) => turno.paciente,
-        destinatario: (turno) => turno.medico
+        destinario: (turno) => turno.medico
     },
     CONFIRMADO:{
         descripcion: "Confirmado",
         remitente: (turno) => turno.medico,
-        destinatario: (turno) => turno.paciente
+        destinario: (turno) => turno.paciente
     },
     CANCELADO:{
         descripcion: "Cancelado",
         remitente: (turno) => lodash.last(turno.historialEstados).usuario ?? null,
-        destinatario: (turno) => { 
-            const ultimo_turno = lodash.last(turno.historialEstados).usuario;
-            if (!ultimo_turno) return null;
+        destinario: (turno) => { 
+            const ultimo_estado = lodash.last(turno.historialEstados).usuario;
+            if (!ultimo_estado) return null;
 
-            return ultimo_turno.usuario.id === turno.paciente.id
+            return ultimo_estado.usuario.id === turno.paciente.id
                         ? turno.medico
                         : turno.paciente;
         }
@@ -31,6 +31,6 @@ export const EstadoTurno = Object.freeze({
     REALIZADO:{
         descripcion: "Realizado",
         remitente: (turno) => null,
-        destinatario: (turno) => null
+        destinario: (turno) => null
     }
 })

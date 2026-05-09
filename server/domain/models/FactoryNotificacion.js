@@ -6,13 +6,23 @@ export default class FactoryNotification {
 
     crearSegunEstado(turno) {
 
-        if (!turno) {
+        if (!(turno instanceof Turno)) {
             throw new Error("Turno inválido");
+        }
+
+        if (!turno.estado || !turno.estado.descripcion) {
+            throw new Error("Estado inválido");
+        }
+
+        if (turno.estado === EstadoTurno.CANCELADO && 
+            (!turno.historialEstados || turno.historialEstados.length === 0)
+        ) {
+            throw new Error("Historial de Estados vacio");
         }
 
         return new Notificacion(
             null, //id
-            turno.estado.destinatario(turno),
+            turno.estado.destinario(turno),
             turno.estado.remitente(turno),
             `Turno ${turno.estado.descripcion} para ${turno.practica.nombre}`,
             new Date(),
@@ -22,19 +32,28 @@ export default class FactoryNotification {
     }
 
     crearDiaPrevioTurno(turno) {
+
+        if (!(turno instanceof Turno)) {
+            throw new Error("Turno inválido");
+        }
+
+        if (!turno.estado || !turno.estado.descripcion) {
+            throw new Error("Estado inválido");
+        }
+
         return [
             this.recordatorioDiaPrevio(turno, turno.paciente),
             this.recordatorioDiaPrevio(turno, turno.medico)
         ];
     }
 
-    recordatorioDiaPrevio(turno, destinatario) {
+    recordatorioDiaPrevio(turno, destinario) {
 
-        const diaTurno = `${turno.fechaHora.getDate()}/${turno.fechaHora.getMonth()+1}/${turno.fechaHora.getFullYear()}`;
+        const diaTurno = `${turno.fechaHora.getDate()}/${turno.fechaHora.getMonth()}/${turno.fechaHora.getFullYear()}`;
         
         const recordatorio = new Notificacion(
                 null, //id
-                destinatario,
+                destinario,
                 null,
                 `Recordatorio de turno para ${turno.practica.nombre} el dia ${diaTurno}`,
                 new Date(),

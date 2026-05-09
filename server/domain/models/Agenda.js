@@ -7,19 +7,15 @@ import DisponibilidadHoraria from "./DisponibilidadHoraria.js"
 
 export default class Agenda {
     generarTurnosPara(tipo, medico, sede) {
-    if (!medico.sedes.includes(sede)) {
-        throw new Error("El medico no atiende en esta sede");
-    }
+        if (!medico.sedes.includes(sede)) {
+            throw new Error("El medico no atiende en esta sede");
+        }
 
-    if (medico.especialidades?.includes(tipo)) {
-        return this.armarTurnos(tipo, medico, sede);
-    }
+        if (medico.especialidades?.includes(tipo) || medico.practicas?.includes(tipo)) {
+            return this.armarTurnos(tipo, medico, sede);
+        }
 
-    if (medico.practicas?.includes(tipo)) {
-        return this.armarTurnos(tipo, medico, sede);
-    }
-
-    throw new Error("El medico no tiene ni especialidad ni practica valida");
+        throw new Error("El medico no tiene ni especialidad ni practica valida");
     }
 
     armarTurnos(tipoTurno, medico, sede){
@@ -66,5 +62,6 @@ export default class Agenda {
     }
 
     refrescarTurnosSegunDisponibilidadDe(medico){
+        
     }
 }

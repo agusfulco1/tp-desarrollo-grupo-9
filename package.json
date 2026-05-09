@@ -2,11 +2,11 @@
   "name": "tp-desarrollo-grupo-9",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js.js",
+  "main": "index.js",
   "scripts": {
-    "test": "node server/index.js",
-    "start": "node server/index.js.js",
-    "dev": "node --watch server/index.js.js"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js"
   },
   "keywords": [],
   "author": "",

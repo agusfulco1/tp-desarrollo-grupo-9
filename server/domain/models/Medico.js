@@ -19,16 +19,16 @@ export default class Medico {
 
     definirDisponibilidad(nuevaDisponibilidad) {
         
-        const existe = lodash.includes(this.disponibilidades,nuevaDisponibilidad)
-
-        /*const existe = this.disponibilidades.some(disponibilidad =>
-            disponibilidad == nuevaDisponibilidad             
-        );*/
+        const existe = this.disponibilidades.some(d =>
+            d.diaSemana === nuevaDisponibilidad.diaSemana &&
+            d.horaDesde === nuevaDisponibilidad.horaDesde &&
+            d.horaHasta === nuevaDisponibilidad.horaHasta
+        );
         
-        if(!existe){
-            this.disponibilidades.push(nuevaDisponibilidad);
-        } else {
-            throw new Error("Esta disponibilidad ya esta definida.");       
+        if(existe){
+            throw new Error("Esta disponibilidad ya esta definida"); 
         }
+
+        this.disponibilidades.push(nuevaDisponibilidad);
     }
 }

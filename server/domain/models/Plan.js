@@ -13,22 +13,22 @@ export default class Plan {
     }
 
     obtenerCobertura(tipo) {
-    const coberturaEspecialidad = this.coberturaEspecialidad.find(
-        cobertura => cobertura.especialidad === tipo
-    );
+        const coberturaEspecialidad = this.coberturaEspecialidad.find(
+            cobertura => cobertura.especialidad === tipo
+        );
 
-    if (coberturaEspecialidad) {
-        return coberturaEspecialidad.nivel;
-    }
+        if (coberturaEspecialidad) {
+            return coberturaEspecialidad.nivel;
+        }
 
-    const coberturaPractica = this.coberturasPracticas.find(
-        cobertura => cobertura.practica === tipo
-    );
+        const coberturaPractica = this.coberturasPracticas.find(
+            cobertura => cobertura.practica === tipo
+        );
 
-    if (coberturaPractica) {
-        return coberturaPractica.nivel;
-    }
+        if (coberturaPractica) {
+            return coberturaPractica.nivel;
+        }
 
-    throw new Error("No existe esa especialidad ni practica en las coberturas del plan");
+        throw new Error("No existe esa especialidad ni practica en las coberturas del plan");
     }
 }

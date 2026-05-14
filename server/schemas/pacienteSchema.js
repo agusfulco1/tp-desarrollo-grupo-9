@@ -1,14 +1,6 @@
 import mongoose from 'mongoose';
 import { Paciente } from "../domain/models/Paciente.js";
 
-
-        // this.id = id;
-        // this.usuario = usuario;
-        // this.dni = dni;
-        // this.nombre = nombre;
-        // this.obraSocial = obraSocial;
-        // this.plan = plan;
-
 const pacienteSchema = new mongoose.Schema({
     usuario:{
         type: mongoose.Schema.Types.ObjectId,
@@ -26,15 +18,21 @@ const pacienteSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    obraSocial:{
-        // Aca deberiamos guardar obra social y plan . No se como
-    },
-    plan:{
-        
+    cobertura:{
+        obraSocial: { 
+            type: String,
+            required: true
+        },
+        plan: { 
+            type: String,
+            required: true
+        },
+        numeroAfiliado:{
+            type: String,
+            required: true
+        }
     }
-    },{
-        timestamps: true,
-});
+}, {timestamps: true});
 
 //MIDDLEWARE PARA POPULAR TODOS LOS METODOS QUE TENGAN 'find'
 // ReservaSchema.pre(/^find/, function(next) {

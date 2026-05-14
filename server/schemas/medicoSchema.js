@@ -4,17 +4,7 @@ import Especialidad from "../domain/models/Especialidad.js"
 import Practica from "../domain/models/Practica.js"
 import Sede from "../domain/models/Sede.js"
 import Disponibilidad from "../domain/models/Disponibilidad.js"
-
-    // constructor(id,usuario,matricula,nombre,especialidades,practicas,sedes,disponibilidades) {
-    //     this.id = id;
-    //     this.usuario = usuario;
-    //     this.matricula = matricula;
-    //     this.nombre = nombre;
-    //     this.especialidades = [...especialidades];
-    //     this.practicas = [...practicas];
-    //     this.sedes = [...sedes];
-    //     this.disponibilidades = [...disponibilidades];
-    // }
+import { disponibilidadSchema } from './disponibilidadSchema.js';
 
 const medicoSchema = new mongoose.Schema({
     usuario:{
@@ -32,22 +22,16 @@ const medicoSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    especialidades:{
-        type: [Especialidad.schema],
-    },
-    practicas:{
-        type: [Practica.schema]
-    },
-    sedes:{
-        type:[Sede.schema]
-    },
-    disponibilidades:{
-        type: [Disponibilidad.schema]
-    }
-    },{
-    timestamps: true,
     
-});
+    especialidades: [{type: mongoose.Schema.Types.ObjectId, ref: "especialidad"}],
+
+    practicas: [{ type: mongoose.Schema.Types.ObjectId, ref: 'practica' }],
+
+    sedes:[{ type: mongoose.Schema.Types.ObjectId, ref: 'sede' }],
+    
+    disponibilidades:[disponibilidadSchema]
+    
+}, {timestamps: true});
 
 MedicoSchema.loadClass(Medico);
 

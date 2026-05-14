@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import Usuario from "../domain/models/Usuario.js";
+import { DiaSemana } from "../domain/enums/DiaSemana.js"
 
 const usuarioSchema = new mongoose.Schema({
     username:{
@@ -17,7 +18,7 @@ const usuarioSchema = new mongoose.Schema({
         enum: ["PACIENTE", "MEDICO", "ADMIN"],
         required: true,
     }
-})
+}, {timestamps: true});
 
 usuarioSchema.loadClass(Usuario);
 

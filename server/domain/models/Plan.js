@@ -16,6 +16,7 @@ export default class Plan {
     const coberturaEspecialidad = this.coberturaEspecialidad.find(
         cobertura => cobertura.especialidad === tipo
     );
+    console.log(coberturaEspecialidad)
 
     if (coberturaEspecialidad) {
         return coberturaEspecialidad.nivel;

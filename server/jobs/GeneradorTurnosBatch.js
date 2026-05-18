@@ -29,7 +29,7 @@ class GeneradorDeTurnos{
                 const duracionMinutos = servicioActivo.duracionMinutos || 30;
                 const sedeId = medico.sedes[0];
 
-                for(i=1;i<diasProyectados;i++){
+                for(i=1; i<diasProyectados; i++){
                     const fechaEvaluada = hoy.add(1,'day');
                     const nombreDiaSemana = MAPA_DIAS[fechaEvaluar.day()]; // esto me da un dia del array
 
@@ -43,13 +43,72 @@ class GeneradorDeTurnos{
                         
                     }
 
+                    // mientras que la hr del slot + la duracion no pase la hora fin de su turno armamos los turnos
+                    while(horaInicioSlot.add(duracionMinutos,'minute').isBefore(horaFinTotal) || horaInicioSlot.add(duracionMinutos, 'minute').isSame(horaFinTotal)){
+                        
+                        turnosNuevos.push({
+
+                            medico_id: medico._id,
+                                sede_id: sedeId,
+                                servicio_id: servicioActivo._id, 
+                                fechaHora: horaInicioSlot.toDate(), // hay qeu usar toDate para pasrlo al formato de fecha en mongo
+                                estadoActual: 'DISPONIBLE',
+                                historial: [{
+                                    estado: 'DISPONIBLE',
+                                    motivo: 'Generación Automática Batch'
+                                }]
+
+                        });
+
+                        horaInicioSlot = horaInicioSlot.add(duracionMinutos, 'minute'); // pasamos a el siguiente horario
+                    }
 
                 }
 
             }
-        }
-        catch{
+
+            // buscamos los turnos que ya existen en la base de datos para no pisarlos
+            const fechasNuevas = turnosNuevos.filter(n => n.fechaHora);
+
+            const turnosEnMongo = await Turno.find({ fechaHora: {$in : fechasNuevas} }, 'fechaHora medico_id').lean();
+
+            // filtramos el array sacando los de mongo
+
+            turnosNuevos = turnosNuevos.filter(nuevo => 
+                !turnosExistentes.some(existente => 
+                    existente.medico_id.toString() === nuevo.medico_id.toString() && 
+                    dayjs(existente.fechaHora).isSame(nuevo.fechaHora)
+                )
+            ); 
+
+            // cargamos los nuevos a mongo usando loadash, _.chunck divide el array en arrays mas chicos
+            // es para que no se rechace una solicitud de carga por exceso de peso
+
+            if (turnosNuevos.length > 0) {
+                const paquetesDeTurnos = _.chunk(turnosNuevos, 100);
+                
+                for (const paquete of paquetesDeTurnos) {
+                    await Turno.insertMany(paquete);
+                }
+                
+                console.log(`Se generaron y guardaron ${turnosNuevos.length} turnos nuevos.`);
+            } else {
+                throw new Error("No hay turnos nuevos para generar hoy (ya estaban todos creados)");
+            }
 
         }
+        catch{
+            throw new Error("Error critico en el proceso batch");
+        }
     }
+
+    // se inicia a las 02 am
+    IniciarCronometro(){
+            cron.schedule('0 2 * * *', () => {
+                        this.ejecutar();
+                    });
+        }
+
 }
+
+export default GeneradorDeTurnos();

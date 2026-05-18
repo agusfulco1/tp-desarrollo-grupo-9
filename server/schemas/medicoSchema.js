@@ -23,9 +23,9 @@ const medicoSchema = new mongoose.Schema({
         required: true
     },
     
-    especialidades: [{type: mongoose.Schema.Types.ObjectId, ref: "especialidad"}],
+    especialidad: {type: mongoose.Schema.Types.ObjectId, ref: "especialidad"},
 
-    practicas: [{ type: mongoose.Schema.Types.ObjectId, ref: 'practica' }],
+    practica: { type: mongoose.Schema.Types.ObjectId, ref: 'practica' },
 
     sedes:[{ type: mongoose.Schema.Types.ObjectId, ref: 'sede' }],
     

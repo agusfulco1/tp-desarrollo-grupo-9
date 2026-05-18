@@ -93,12 +93,12 @@ class GeneradorDeTurnos{
                 
                 console.log(`Se generaron y guardaron ${turnosNuevos.length} turnos nuevos.`);
             } else {
-                throw new Error("No hay turnos nuevos para generar hoy (ya estaban todos creados)");
+                console.log("No hay turnos nuevos para generar hoy (ya estaban todos creados)");
             }
 
         }
-        catch{
-            throw new Error("Error critico en el proceso batch");
+        catch(error){
+            console.error("Error detectado en el proceso batch",error)
         }
     }
 
